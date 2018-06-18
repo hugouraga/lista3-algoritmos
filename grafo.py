@@ -80,7 +80,12 @@ def dijkstra(vetor,src,dest,visited=[],distances={},predecessors={}):
             path.append(pred)
             pred=predecessors.get(pred,None)
             print(distances)
-        print('O menor caminho para: '+str(path)+" é com o custo="+str(distances[dest]))
+            print(predecessors)
+            x  = predecessors.values()
+            soma = 0
+            for caminho in x:
+                soma += caminho
+        print('O menor caminho para: '+str(path)+" é com o custo="+str(soma))
     else :
         if not visited:
             distances[src]=0
@@ -92,7 +97,7 @@ def dijkstra(vetor,src,dest,visited=[],distances={},predecessors={}):
                 new_distance = distances[src] + vetor[src][contador][1]
                 if new_distance < distances.get(neighbor,float('inf')):
                     distances[neighbor[0]] = new_distance
-                    predecessors[neighbor] = src
+                    predecessors[neighbor] = neighbor[1]
                 contador += 1
         visited.append(src)
         unvisited={}
@@ -101,3 +106,4 @@ def dijkstra(vetor,src,dest,visited=[],distances={},predecessors={}):
                 unvisited[k] = distances.get(k,float('inf'))
         x=min(unvisited, key=unvisited.get)
         dijkstra(vetor,x,dest,visited,distances,predecessors)
+
